@@ -49,6 +49,11 @@ test:
 #
 production:
   <<: *default
-  database: weatherbot_production
-  username: weatherbot
-  password: <%= ENV['WEATHERBOT_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  
+  
+  #database: weatherbot_production
+  #username: weatherbot
+  #password: <%= ENV['WEATHERBOT_DATABASE_PASSWORD'] %>
