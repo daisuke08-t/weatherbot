@@ -3,26 +3,26 @@
 
 <script>
     
-$(function() {
+// $(function() {
   
-  function getweather() {
+//   function getweather() {
     
     
-    var url = 'http://weather.livedoor.com/forecast/webservice/json/v1?city=130010';
-    $.getJSON(url, function(jsonData) {
+//     var url = 'http://weather.livedoor.com/forecast/webservice/json/v1?city=130010';
+//     $.getJSON(url, function(jsonData) {
       
       
-      var telop = jsonData.forecasts[0].telop;
-      $('.weather').text(jsonData.forecasts[0].telop);
+//       var telop = jsonData.forecasts[0].telop;
+//       $('.weather').text(jsonData.forecasts[0].telop);
       
       
       
-    });
+//     });
     
-  }
+//   }
   
-  getweather();
+//   getweather();
   
-});
+// });
 
 </script>
