@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   
   get '/' => 'home#index'
   
+  get '/weather' => 'weather#index'
+  
   post '/callback' => 'linebot#callback'  
+  
+  post '/request_weather' => 'weather#request_weather'
   
   
 end
