@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   
   post '/callback' => 'linebot#callback'  
   
-  post '/request_weather' => 'weather#request_weather'
+  post '/request_weather' => 'linebot#request_weather'
   
   
 end

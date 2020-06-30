@@ -2,7 +2,8 @@ class LinebotController < ApplicationController
   
   require 'line/bot'
 
-  protect_from_forgery :except => [:callback]
+  protect_from_forgery with: :exception
+  #protect_from_forgery :except => [:callback]
 
   def client
     @client ||= Line::Bot::Client.new { |config|
@@ -29,6 +30,7 @@ class LinebotController < ApplicationController
           # LINEから送られてきたメッセージが「アンケート」と一致するかチェック
           if event.message['text'].eql?('天気')
             # private内のtemplateメソッドを呼び出します。
+            request_weather
             client.reply_message(event['replyToken'], template)
           end
         end
@@ -46,7 +48,7 @@ class LinebotController < ApplicationController
       "altText": "this is a confirm template",
       "template": {
           "type": "confirm",
-          "text": "今日の天気は〇〇です！！",
+          "text": "今日の天気は#{@today_weather}です！！",
           "actions": [
               {
                 "type": "message",
@@ -63,6 +65,23 @@ class LinebotController < ApplicationController
           ]
       }
     }
+  end
+  
+  
+  
+  #protect_from_forgery :except => [:request_weather]
+  
+    CITY = "Tokyo,JP"
+    BASE_URL = "https://api.openweathermap.org/data/2.5/"
+    
+    require "json"
+    require "open-uri"
+  
+  def request_weather
+    response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
+    datas = JSON.parse(response.read)
+    @today_weather = datas["weather"][0]["description"]
+    #@t = today_weather
   end
   
 end
