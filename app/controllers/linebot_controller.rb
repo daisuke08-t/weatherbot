@@ -6,18 +6,18 @@ class LinebotController < ApplicationController
   protect_from_forgery :except => [:callback]
   #protect_from_forgery :except => [:request_weather]
   
-  CITY = "Tokyo,JP"
-  BASE_URL = "https://api.openweathermap.org/data/2.5/"
+  # CITY = "Tokyo,JP"
+  # BASE_URL = "https://api.openweathermap.org/data/2.5/"
   
-  require "json"
-  require "open-uri"
+  # require "json"
+  # require "open-uri"
   
-  def request_weather
-    response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
-    datas = JSON.parse(response.read)
-    @today_weather = datas["weather"][0]["description"]
-    #@t = today_weather
-  end
+  # def request_weather
+  #   response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
+  #   datas = JSON.parse(response.read)
+  #   @today_weather = datas["weather"][0]["description"]
+  #   #@t = today_weather
+  # end
 
   def client
     @client ||= Line::Bot::Client.new { |config|
@@ -37,15 +37,22 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each { |event|
+      if event.message['text'].include?('天気')
+        response = "今日の天気はです!!"
+      end
+      
+      
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
+          
+          massage = {
+            type: 'text',
+            text: response
+          }
           # LINEから送られてきたメッセージが「アンケート」と一致するかチェック
-          if event.message['text'].eql?('天気')
-            # private内のtemplateメソッドを呼び出します。
-            client.reply_message(event['replyToken'], template)
-          end
+            client.reply_message(event['replyToken'], massage)
         end
       end
     }
@@ -55,30 +62,30 @@ class LinebotController < ApplicationController
 
   private
 
-  def template
-    {
-      "type": "template",
-      "altText": "this is a confirm template",
-      "template": {
-          "type": "confirm",
-          "text": "今日の天気はです！！",
-          "actions": [
-              {
-                "type": "message",
-                # Botから送られてきたメッセージに表示される文字列です。
-                "label": "Happy",
-                # ボタンを押した時にBotに送られる文字列です。
-                "text": "Happy"
-              },
-              {
-                "type": "message",
-                "label": "So so...",
-                "text": "So so..."
-              }
-          ]
-      }
-    }
-  end
+  # def template
+  #   {
+  #     "type": "template",
+  #     "altText": "this is a confirm template",
+  #     "template": {
+  #         "type": "confirm",
+  #         "text": "今日の天気はです！！",
+  #         "actions": [
+  #             {
+  #               "type": "message",
+  #               # Botから送られてきたメッセージに表示される文字列です。
+  #               "label": "Happy",
+  #               # ボタンを押した時にBotに送られる文字列です。
+  #               "text": "Happy"
+  #             },
+  #             {
+  #               "type": "message",
+  #               "label": "So so...",
+  #               "text": "So so..."
+  #             }
+  #         ]
+  #     }
+  #   }
+  # end
   
   
   
