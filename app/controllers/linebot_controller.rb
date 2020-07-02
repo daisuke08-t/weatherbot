@@ -33,13 +33,15 @@ class LinebotController < ApplicationController
       if event.message['text'].include?('天気')
         response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
         datas = JSON.parse(response.read)
-        @today_weather = datas["weather"][0]["description"]
-        @response = "今日の天気です！！"
-        @response_main = "天気： #{datas["weather"][0]["main"]}"
-        @response_description = "天気詳細： #{datas["weather"][0]["description"]}"
-        @response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}.png"
+        #@today_weather = datas["weather"][0]["description"]
+        @response = "今日の天気です！！\n"
+        @response_main = "天気： #{datas["weather"][0]["main"]}\n"
+        @response_description = "天気詳細： #{datas["weather"][0]["description"]}\n"
+        @response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}.png\n"
         response_temp = datas["main"]["temp"] - 273.15
-        @response_temp = response_temp.round(1)
+        @response_temp = "#{response_temp.round(1)}" + "℃"
+        
+        @templete = @response + @response_main + @response_description + @response_temp
         
       end
       
@@ -51,16 +53,19 @@ class LinebotController < ApplicationController
           
           massage = {
             
-            "contens": [
-              
-              {"type": "text",
-              "text": @response},
-              
-              {"type": "text",
-              "text": @response_main},
+            "type": "text",
+            "text": @template
             
-              {"type": "text",
-              "text": @response_description},
+            # "contens": [
+              
+            #   {"type": "text",
+            #   "text": @response},
+              
+            #   {"type": "text",
+            #   "text": @response_main},
+            
+            #   {"type": "text",
+            #   "text": @response_description},
             
               # {"type": "image",
               # "originalContentUrl": @response_icon,
@@ -70,7 +75,7 @@ class LinebotController < ApplicationController
               # {"type": 'text',
               # "text": @response_temp}
               
-              ]
+              # ]
             
             
             
