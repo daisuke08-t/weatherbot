@@ -38,7 +38,8 @@ class LinebotController < ApplicationController
         @response_main = "天気： #{datas["weather"][0]["main"]}"
         @response_description = "天気詳細： #{datas["weather"][0]["description"]}"
         @response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}"
-        @response_temp = datas["main"]["temp"] - 273.15
+        response_temp = datas["main"]["temp"] - 273.15
+        @response_temp = response_temp.round(1) + "℃"
         
       end
       
@@ -49,17 +50,29 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           
           massage = {
-            type: 'text',
-            text: @response,
-            text: @response_main,
-            text: @response_description,
             
-            "type": "image",
-            "originalContentUrl": @response_icon,
-            "previewImageUrl": @response_icon,
+            "contens": [
+              
+              {"type": "text",
+              "text": @response},
+              
+              {"type": "text",
+              "text": @response_main},
             
-            type: 'text',
-            text: @response_temp,
+              {"type": "text",
+              "text": @response_description},
+            
+              {"type": "image",
+              "originalContentUrl": @response_icon,
+              "previewImageUrl": @response_icon},
+          
+            
+              {"type": 'text',
+              "text": @response_temp}
+              
+              ]
+            
+            
             
           }
           
