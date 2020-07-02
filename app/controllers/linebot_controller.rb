@@ -1,6 +1,6 @@
 class LinebotController < ApplicationController
   
-  before_action :openweathermap, only: [:clallback]
+  before_action :openweathermap, only: [:callback]
   
   require 'line/bot'
 
