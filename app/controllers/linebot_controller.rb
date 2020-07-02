@@ -1,6 +1,6 @@
 class LinebotController < ApplicationController
   
-  before_action :openweathermap, only: [:callback]
+  #before_action :openweathermap, only: [:callback]
   
   require 'line/bot'
 
@@ -25,6 +25,7 @@ class LinebotController < ApplicationController
 
     events.each { |event|
       if event.message['text'].include?('天気')
+        openweathermap
         response = "今日の天気は#{@today_weather}です!!"
       end
       
