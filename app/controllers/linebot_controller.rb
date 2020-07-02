@@ -2,7 +2,13 @@ class LinebotController < ApplicationController
   require 'line/bot'
   protect_from_forgery :except => [:callback]
   
-  before_action :openweathermap
+  #before_action :openweathermap
+  
+  CITY = "Tokyo,JP"
+    BASE_URL = "https://api.openweathermap.org/data/2.5/"
+    
+    require "json"
+    require "open-uri"
   
 
 
@@ -25,6 +31,9 @@ class LinebotController < ApplicationController
 
     events.each { |event|
       if event.message['text'].include?('天気')
+        response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
+        datas = JSON.parse(response.read)
+        @today_weather = datas["weather"][0]["description"]
         response = "今日の天気は#{@today_weather}です!!"
       end
       
