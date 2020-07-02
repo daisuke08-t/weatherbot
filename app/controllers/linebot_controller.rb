@@ -37,11 +37,11 @@ class LinebotController < ApplicationController
         @response = "今日の天気です！！\n"
         @response_main = "天気： #{datas["weather"][0]["main"]}\n"
         @response_description = "天気詳細： #{datas["weather"][0]["description"]}\n"
-        @response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}.png\n"
+        #@response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}.png\n"
         response_temp = datas["main"]["temp"] - 273.15
         @response_temp = "#{response_temp.round(1)}" + "℃"
         
-        @templete = @response + @response_main + @response_description + @response_temp
+        @template = @response + @response_main + @response_description + @response_temp
         
       end
       
