@@ -1,10 +1,10 @@
 class LinebotController < ApplicationController
-  
-  #before_action :openweathermap, only: [:callback]
-  
   require 'line/bot'
-
   protect_from_forgery :except => [:callback]
+  
+  before_action :openweathermap
+  
+
 
   def client
     @client ||= Line::Bot::Client.new { |config|
@@ -25,7 +25,6 @@ class LinebotController < ApplicationController
 
     events.each { |event|
       if event.message['text'].include?('天気')
-        openweathermap
         response = "今日の天気は#{@today_weather}です!!"
       end
       
@@ -39,8 +38,8 @@ class LinebotController < ApplicationController
             type: 'text',
             text: response
           }
-          # LINEから送られてきたメッセージが「アンケート」と一致するかチェック
-            client.reply_message(event['replyToken'], massage)
+          
+          client.reply_message(event['replyToken'], massage)
         end
       end
     }
