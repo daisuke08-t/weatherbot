@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   
-  #include WeatherController
+  def openweathermap
+      request_weather
+  end
   
 end

@@ -15,7 +15,7 @@ class WeatherController < ApplicationController
   end
   
   def index
-    request_weather
+    openweathermap
     
   end
   

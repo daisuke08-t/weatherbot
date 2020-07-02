@@ -1,23 +1,10 @@
 class LinebotController < ApplicationController
   
+  before_action :openweathermap, only: [:clallback]
+  
   require 'line/bot'
 
-  #protect_from_forgery with: :exception
   protect_from_forgery :except => [:callback]
-  #protect_from_forgery :except => [:request_weather]
-  
-  # CITY = "Tokyo,JP"
-  # BASE_URL = "https://api.openweathermap.org/data/2.5/"
-  
-  # require "json"
-  # require "open-uri"
-  
-  # def request_weather
-  #   response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
-  #   datas = JSON.parse(response.read)
-  #   @today_weather = datas["weather"][0]["description"]
-  #   #@t = today_weather
-  # end
 
   def client
     @client ||= Line::Bot::Client.new { |config|
@@ -38,7 +25,7 @@ class LinebotController < ApplicationController
 
     events.each { |event|
       if event.message['text'].include?('天気')
-        response = "今日の天気はです!!"
+        response = "今日の天気は#{@today_weather}です!!"
       end
       
       
