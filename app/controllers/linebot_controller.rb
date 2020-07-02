@@ -5,10 +5,10 @@ class LinebotController < ApplicationController
   #before_action :openweathermap
   
   CITY = "Tokyo,JP"
-    BASE_URL = "https://api.openweathermap.org/data/2.5/"
-    
-    require "json"
-    require "open-uri"
+  BASE_URL = "https://api.openweathermap.org/data/2.5/"
+  
+  require "json"
+  require "open-uri"
   
 
 
