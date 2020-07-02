@@ -34,7 +34,12 @@ class LinebotController < ApplicationController
         response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
         datas = JSON.parse(response.read)
         @today_weather = datas["weather"][0]["description"]
-        response = "今日の天気は#{@today_weather}です!!"
+        @response = "今日の天気です！！"
+        @response_main = "天気： #{datas["weather"][0]["main"]}"
+        @response_description = "天気詳細： #{datas["weather"][0]["description"]}"
+        @response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}"
+        @response_temp = datas["main"]["temp"] - 273.15
+        
       end
       
       
@@ -45,7 +50,17 @@ class LinebotController < ApplicationController
           
           massage = {
             type: 'text',
-            text: response
+            text: @response,
+            text: @response_main,
+            text: @response_description,
+            
+            "type": "image",
+            "originalContentUrl": @response_icon,
+            "previewImageUrl": @response_icon,
+            
+            type: 'text',
+            text: @response_temp,
+            
           }
           
           client.reply_message(event['replyToken'], massage)
