@@ -2,8 +2,8 @@ class LinebotController < ApplicationController
   
   require 'line/bot'
 
-  protect_from_forgery with: :exception
-  #protect_from_forgery :except => [:callback]
+  #protect_from_forgery with: :exception
+  protect_from_forgery :except => [:callback]
   #protect_from_forgery :except => [:request_weather]
   
   CITY = "Tokyo,JP"
