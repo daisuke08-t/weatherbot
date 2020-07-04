@@ -2,7 +2,6 @@ class LinebotController < ApplicationController
   require 'line/bot'
   protect_from_forgery :except => [:callback]
   
-  #before_action :openweathermap
   
   CITY = "Tokyo,JP"
   BASE_URL = "https://api.openweathermap.org/data/2.5/"
@@ -30,16 +29,14 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each { |event|
-      if event.message['text'].include?('天気')
-        response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")
+      if event.message['text'].include?('天気')  #天気の情報を取得する処理
+        response = open(BASE_URL + "weather?q=#{CITY}&APPID=#{ENV["OPEN_API_KEY"]}")  
         datas = JSON.parse(response.read)
-        #@today_weather = datas["weather"][0]["description"]
         @response = "今日の天気です！！\n"
         @response_main = "天気： #{datas["weather"][0]["main"]}\n"
         @response_description = "天気詳細： #{datas["weather"][0]["description"]}\n"
-        #@response_icon = "http://openweathermap.org/img/w/#{datas["weather"][0]["icon"]}.png\n"
         response_temp = datas["main"]["temp"] - 273.15
-        @response_temp = "#{response_temp.round(1)}" + "℃"
+        @response_temp = "気温： #{response_temp.round(1)}" + "℃"
         
         @template = @response + @response_main + @response_description + @response_temp
         
@@ -55,28 +52,6 @@ class LinebotController < ApplicationController
             
             "type": "text",
             "text": @template
-            
-            # "contens": [
-              
-            #   {"type": "text",
-            #   "text": @response},
-              
-            #   {"type": "text",
-            #   "text": @response_main},
-            
-            #   {"type": "text",
-            #   "text": @response_description},
-            
-              # {"type": "image",
-              # "originalContentUrl": @response_icon,
-              # "previewImageUrl": @response_icon},
-          
-            
-              # {"type": 'text',
-              # "text": @response_temp}
-              
-              # ]
-            
             
             
           }

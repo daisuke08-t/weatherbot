@@ -1,24 +1,31 @@
-# README
+# Weather Bot
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Weather Bot is can easily confirm weather using LINE
 
-Things you may want to cover:
+<img src="https://user-images.githubusercontent.com/62994067/86517379-74de8000-be63-11ea-9a22-51f6f154ddaf.jpg">
 
-* Ruby version
+# Features
 
-* System dependencies
+If you want to know today's weather, I can easily know the weather.
+The method beats with weather in an input column of LINE.
 
-* Configuration
+<img src="https://user-images.githubusercontent.com/62994067/86517642-73ae5280-be65-11ea-954d-5e96d66b46c8.jpg">
 
-* Database creation
+Then, Weather Bot tells today's weather.
 
-* Database initialization
+<img src="https://user-images.githubusercontent.com/62994067/86517631-6e510800-be65-11ea-9e80-de7344a6c3db.jpg">
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+# Use technique
+* ruby 2.6.3
+* rails 5.2.0
 
-* Deployment instructions
+### DEPLOY:
+* heroku
 
-* ...
+### OTHER:
+* API: LINE Messaging API
+
+
+# Author
+* Daisuke Taniguchi
