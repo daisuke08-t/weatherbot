@@ -64,34 +64,5 @@ class LinebotController < ApplicationController
     head :ok
   end
 
-  private
-
-  # def template
-  #   {
-  #     "type": "template",
-  #     "altText": "this is a confirm template",
-  #     "template": {
-  #         "type": "confirm",
-  #         "text": "今日の天気はです！！",
-  #         "actions": [
-  #             {
-  #               "type": "message",
-  #               # Botから送られてきたメッセージに表示される文字列です。
-  #               "label": "Happy",
-  #               # ボタンを押した時にBotに送られる文字列です。
-  #               "text": "Happy"
-  #             },
-  #             {
-  #               "type": "message",
-  #               "label": "So so...",
-  #               "text": "So so..."
-  #             }
-  #         ]
-  #     }
-  #   }
-  # end
-  
-  
-  
   
 end
